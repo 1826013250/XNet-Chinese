@@ -101,11 +101,11 @@ public class ChannelInfo {
             String id = tc.getString("type");
             IChannelType type = XNet.xNetApi.findType(id);
             if (type == null) {
-                XNet.setup.getLogger().warn("Unsupported type " + id + "!");
+                XNet.setup.getLogger().warn("不支持的类型 “" + id + "”!");
                 continue;
             }
             if (!getType().equals(type)) {
-                XNet.setup.getLogger().warn("Trying to load a connector with non-matching type " + type + "!");
+                XNet.setup.getLogger().warn("尝试为连接器加载一个不匹配的类型“" + type + "”!");
                 continue;
             }
             ConsumerId consumerId = new ConsumerId(tc.getInt("consumerId"));

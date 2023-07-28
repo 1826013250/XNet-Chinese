@@ -161,7 +161,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
         ConnectedBlockClientInfo c = tileEntity.clientConnectedBlocks.get(index);
         if (c != null) {
             RFToolsBase.instance.clientInfo.hilightBlock(c.getPos().pos(), System.currentTimeMillis() + 1000 * 5);
-            Logging.message(minecraft.player, "The block is now highlighted");
+            Logging.message(minecraft.player, "该方块已被高亮显示");
             minecraft.player.closeContainer();
         }
     }
@@ -221,14 +221,14 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
                 if (getSelectedChannel() != -1) {
                     copyConnector();
                 } else {
-                    showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "Nothing selected!");
+                    showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "啥都木有选择!");
                 }
                 return true;
             } else if (keyCode == GLFW.GLFW_KEY_V) {
                 if (getSelectedChannel() != -1) {
                     pasteConnector();
                 } else {
-                    showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "Nothing selected!");
+                    showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "啥都木有选择!");
                 }
                 return true;
             }
@@ -268,7 +268,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
     }
 
     private void removeChannel() {
-        showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "Really remove channel " + (getSelectedChannel() + 1) + "?", () -> {
+        showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "真的要移除 “" + (getSelectedChannel() + 1) + "” 频道么?", () -> {
             sendServerCommandTyped(XNetMessages.INSTANCE, TileEntityController.CMD_REMOVECHANNEL,
                     TypedMap.builder()
                             .put(PARAM_INDEX, getSelectedChannel())
@@ -315,27 +315,27 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
                 ChannelClientInfo info = tileEntity.clientChannels.get(editingChannel);
                 if (info != null) {
                     ChannelEditorPanel editor = new ChannelEditorPanel(channelEditPanel, minecraft, this, editingChannel);
-                    editor.label("Channel " + (editingChannel + 1))
+                    editor.label("频道 " + (editingChannel + 1))
                             .shift(5)
-                            .toggle(TAG_ENABLED, "Enable processing on this channel", info.isEnabled())
+                            .toggle(TAG_ENABLED, "是否在该频道上启用这个连接器", info.isEnabled())
                             .shift(5)
-                            .text(TAG_NAME, "Channel name", info.getChannelName(), 65);
+                            .text(TAG_NAME, "频道名称", info.getChannelName(), 65);
                     info.getChannelSettings().createGui(editor);
 
                     Button remove = button(151, 1, 9, 10, "x")
                             .textOffset(0, -1)
-                            .tooltips("Remove this channel")
+                            .tooltips("删除这个频道")
                             .event(this::removeChannel);
                     channelEditPanel.children(remove);
                     editor.setState(info.getChannelSettings());
 
-                    Button copyChannel = button(134, 19, 25, 14, "C")
-                            .tooltips("Copy this channel to", "the clipboard")
+                    Button copyChannel = button(134, 19, 25, 14, "复制")
+                            .tooltips("复制这个§a频道§r配置到剪贴板")
                             .event(this::copyChannel);
                     channelEditPanel.children(copyChannel);
 
-                    copyConnector = button(114, 19, 25, 14, "C")
-                            .tooltips("Copy this connector", "to the clipboard")
+                    copyConnector = button(114, 19, 25, 14, "复制")
+                            .tooltips("复制这个§a连接器§r到剪贴板")
                             .event(this::copyConnector);
                     channelEditPanel.children(copyConnector);
 
@@ -345,11 +345,11 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
                     for (IChannelType channelType : XNet.xNetApi.getChannels().values()) {
                         type.choices(channelType.getID());       // Show names?
                     }
-                    Button create = button(100, 3, 53, 14, "Create")
+                    Button create = button(100, 3, 53, 14, "创建")
                             .event(() -> createChannel(type.getCurrentChoice()));
 
-                    Button paste = button(100, 17, 53, 14, "Paste")
-                            .tooltips("Create a new channel", "from the clipboard")
+                    Button paste = button(100, 17, 53, 14, "粘贴")
+                            .tooltips("用剪贴板内的配置创建新的连接器设置")
                             .event(this::pasteChannel);
 
                     channelEditPanel.children(type, create, paste);
@@ -402,7 +402,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
 
 
     private void copyChannel() {
-        showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.GREEN + "Copied channel");
+        showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.GREEN + "频道已复制");
         sendServerCommandTyped(XNetMessages.INSTANCE, TileEntityController.CMD_COPYCHANNEL,
                 TypedMap.builder()
                         .put(PARAM_INDEX, getSelectedChannel())
@@ -420,7 +420,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
         try {
             Minecraft.getInstance().keyboardHandler.setClipboard(json);
         } catch (Exception e) {
-            showError("Error copying to clipboard!");
+            showError("复制到剪贴板时发生错误!");
         }
     }
 
@@ -429,7 +429,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
             String json = Minecraft.getInstance().keyboardHandler.getClipboard();
             int max = Config.controllerMaxPaste.get();
             if (max >= 0 && json.length() > max) {
-                showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "Clipboard too large!");
+                showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "剪贴板的内容过多!");
                 return;
             }
             JsonParser parser = new JsonParser();
@@ -437,7 +437,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
             String type = root.get("type").getAsString();
             IChannelType channelType = XNet.xNetApi.findType(type);
             if (channelType == null) {
-                showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "Unsupported channel type: " + type + "!");
+                showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "不支持的频道类型: " + type + "!");
                 return;
             }
 
@@ -456,7 +456,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
             }
             refresh();
         } catch (Exception e) {
-            showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "Error reading from clipboard!");
+            showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "读取剪贴板内容发生错误!");
         }
     }
 
@@ -465,7 +465,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
             String json = Minecraft.getInstance().keyboardHandler.getClipboard();
             int max = Config.controllerMaxPaste.get();
             if (max >= 0 && json.length() > max) {
-                showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "Clipboard too large!");
+                showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "剪贴板内容过多!");
                 return;
             }
             JsonParser parser = new JsonParser();
@@ -473,7 +473,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
             String type = root.get("type").getAsString();
             IChannelType channelType = XNet.xNetApi.findType(type);
             if (channelType == null) {
-                showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "Unsupported channel type: " + type + "!");
+                showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "不支持的频道类型: " + type + "!");
                 return;
             }
             PacketServerCommandTyped packet = new PacketServerCommandTyped(tileEntity.getBlockPos(), tileEntity.getDimension(), CMD_PASTECHANNEL.name(), TypedMap.builder()
@@ -484,7 +484,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
 
             refresh();
         } catch (Exception e) {
-            showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "Error reading from clipboard!");
+            showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.RED + "读取剪贴板内容发生错误!");
         }
     }
 
@@ -526,7 +526,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
 
                     Button remove = button(151, 1, 9, 10, "x")
                             .textOffset(0, -1)
-                            .tooltips("Remove this connector")
+                            .tooltips("删除这个连接器配置")
                             .event(() -> removeConnector(editingConnector));
 
                     ConnectorEditorPanel editor = new ConnectorEditorPanel(connectorEditPanel, minecraft, this, editingChannel, editingConnector);
@@ -535,12 +535,12 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
                     connectorEditPanel.children(remove);
                     editor.setState(connectorInfo.getConnectorSettings());
                 } else {
-                    Button create = button(85, 20, 60, 14, "Create")
+                    Button create = button(85, 20, 60, 14, "创建")
                             .event(() -> createConnector(editingConnector));
                     connectorEditPanel.children(create);
 
-                    Button paste = button(85, 40, 60, 14, "Paste")
-                            .tooltips("Create a new connector", "from the clipboard")
+                    Button paste = button(85, 40, 60, 14, "粘贴")
+                            .tooltips("从剪贴板创建一个新的连接器配置")
                             .event(this::pasteConnector);
                     connectorEditPanel.children(paste);
                 }
@@ -618,14 +618,14 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
             br.userObject("block");
             panel.children(br);
             if (!name.isEmpty()) {
-                br.tooltips(ChatFormatting.GREEN + "Connector: " + ChatFormatting.WHITE + name,
-                        ChatFormatting.GREEN + "Block: " + ChatFormatting.WHITE + blockName,
-                        ChatFormatting.GREEN + "Position: " + ChatFormatting.WHITE + BlockPosTools.toString(coordinate),
-                        ChatFormatting.WHITE + "(doubleclick to highlight)");
+                br.tooltips(ChatFormatting.GREEN + "连接器: " + ChatFormatting.WHITE + name,
+                        ChatFormatting.GREEN + "方块: " + ChatFormatting.WHITE + blockName,
+                        ChatFormatting.GREEN + "位置: " + ChatFormatting.WHITE + BlockPosTools.toString(coordinate),
+                        ChatFormatting.WHITE + "(双击来高亮显示该方块)");
             } else {
-                br.tooltips(ChatFormatting.GREEN + "Block: " + ChatFormatting.WHITE + blockName,
-                        ChatFormatting.GREEN + "Position: " + ChatFormatting.WHITE + BlockPosTools.toString(coordinate),
-                        ChatFormatting.WHITE + "(doubleclick to highlight)");
+                br.tooltips(ChatFormatting.GREEN + "方块: " + ChatFormatting.WHITE + blockName,
+                        ChatFormatting.GREEN + "位置: " + ChatFormatting.WHITE + BlockPosTools.toString(coordinate),
+                        ChatFormatting.WHITE + "(双击来高亮显示该方块)");
             }
 
             panel.children(label(sidedPos.side().getSerializedName().substring(0, 1).toUpperCase()).color(color).desiredWidth(18));

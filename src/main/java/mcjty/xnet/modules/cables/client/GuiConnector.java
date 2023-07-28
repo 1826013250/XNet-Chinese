@@ -11,6 +11,9 @@ import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.OrientationTools;
 import mcjty.xnet.modules.cables.CableModule;
 import mcjty.xnet.modules.cables.blocks.ConnectorTileEntity;
+
+import mcjty.xnet.modules.cables.client.StringConvert;
+
 import mcjty.xnet.setup.XNetMessages;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.core.Direction;
@@ -48,15 +51,15 @@ public class GuiConnector extends GenericGuiContainer<ConnectorTileEntity, Gener
 
         Panel toplevel = vertical().filledRectThickness(2);
 
-        TextField nameField = new TextField().name("name").tooltips("Set the name of this connector");
+        TextField nameField = new TextField().name("name").tooltips("设置连接器的名字");
 
-        Panel namePanel = horizontal().children(label("Name:"), nameField);
+        Panel namePanel = horizontal().children(label("名字:"), nameField);
         toplevel.children(namePanel);
 
         Panel togglePanel = horizontal().
-                children(label("Directions:"));
+                children(label("方向:"));
         for (Direction facing : OrientationTools.DIRECTION_VALUES) {
-            toggleButtons[facing.ordinal()] = new ToggleButton().text(facing.getSerializedName().substring(0, 1).toUpperCase())
+            toggleButtons[facing.ordinal()] = new ToggleButton().text(StringConvert.convertToChinese(facing))
                 .event(() -> {
                     sendServerCommandTyped(XNetMessages.INSTANCE, CMD_ENABLE,
                             TypedMap.builder()
