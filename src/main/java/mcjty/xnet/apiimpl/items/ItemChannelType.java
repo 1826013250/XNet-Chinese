@@ -22,7 +22,7 @@ public class ItemChannelType implements IChannelType {
 
     @Override
     public String getName() {
-        return "Item";
+        return "物品";
     }
 
     @Override

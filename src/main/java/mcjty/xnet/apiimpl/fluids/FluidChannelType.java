@@ -21,7 +21,7 @@ public class FluidChannelType implements IChannelType {
 
     @Override
     public String getName() {
-        return "Fluid";
+        return "流体";
     }
 
     @Override

@@ -317,7 +317,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
                     ChannelEditorPanel editor = new ChannelEditorPanel(channelEditPanel, minecraft, this, editingChannel);
                     editor.label("频道 " + (editingChannel + 1))
                             .shift(5)
-                            .toggle(TAG_ENABLED, "是否在该频道上启用这个连接器", info.isEnabled())
+                            .toggle(TAG_ENABLED, "是否启用这个频道上的连接器配置", info.isEnabled())
                             .shift(5)
                             .text(TAG_NAME, "频道名称", info.getChannelName(), 65);
                     info.getChannelSettings().createGui(editor);
@@ -335,7 +335,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
                     channelEditPanel.children(copyChannel);
 
                     copyConnector = button(114, 19, 25, 14, "复制")
-                            .tooltips("复制这个§a连接器§r到剪贴板")
+                            .tooltips("复制这个§a连接器§r配置到剪贴板")
                             .event(this::copyConnector);
                     channelEditPanel.children(copyConnector);
 
@@ -343,7 +343,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
                     ChoiceLabel type = new ChoiceLabel()
                             .hint(5, 3, 95, 14);
                     for (IChannelType channelType : XNet.xNetApi.getChannels().values()) {
-                        type.choices(channelType.getID());       // Show names?
+                        type.choices(channelType.getName());       // Show names?
                     }
                     Button create = button(100, 3, 53, 14, "创建")
                             .event(() -> createChannel(type.getCurrentChoice()));
@@ -374,15 +374,15 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
         ask.children(label(title));
         Panel buttons = horizontal().desiredWidth(100).desiredHeight(18);
         if (okEvent != null) {
-            buttons.children(button("Cancel").event((() -> {
+            buttons.children(button("取消").event((() -> {
                 windowManager.closeWindow(askWindow);
             })));
-            buttons.children(button("OK").event(() -> {
+            buttons.children(button("确认").event(() -> {
                 windowManager.closeWindow(askWindow);
                 okEvent.buttonClicked();
             }));
         } else {
-            buttons.children(button("OK").event((() -> {
+            buttons.children(button("确认").event((() -> {
                 windowManager.closeWindow(askWindow);
             })));
         }
@@ -402,7 +402,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
 
 
     private void copyChannel() {
-        showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.GREEN + "频道已复制");
+        showMessage(minecraft, this, getWindowManager(), 50, 50, ChatFormatting.GREEN + "频道已复制!!!");
         sendServerCommandTyped(XNetMessages.INSTANCE, TileEntityController.CMD_COPYCHANNEL,
                 TypedMap.builder()
                         .put(PARAM_INDEX, getSelectedChannel())

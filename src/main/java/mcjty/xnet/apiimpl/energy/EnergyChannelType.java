@@ -21,7 +21,7 @@ public class EnergyChannelType implements IChannelType {
 
     @Override
     public String getName() {
-        return "Energy";
+        return "能量";
     }
 
     @Override

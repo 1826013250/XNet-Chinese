@@ -132,7 +132,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
     private final GenericEnergyStorage energyStorage = new GenericEnergyStorage(this, true, Config.controllerMaxRF.get(), Config.controllerRfPerTick.get());
 
     @Cap(type = CapType.CONTAINER)
-    private final LazyOptional<MenuProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Controller")
+    private final LazyOptional<MenuProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("控制器")
             .containerSupplier(container(ControllerModule.CONTAINER_CONTROLLER, CONTAINER_FACTORY,this))
             .itemHandler(() -> items)
             .energyHandler(() -> energyStorage)
@@ -414,7 +414,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
                 String id = tc.getString(JSON_TYPE);
                 IChannelType type = XNet.xNetApi.findType(id);
                 if (type == null) {
-                    XNet.setup.getLogger().warn("Unsupported type " + id + "!");
+                    XNet.setup.getLogger().warn("不支持的类型： " + id + "!");
                     continue;
                 }
                 channels[i] = new ChannelInfo(type);
@@ -445,7 +445,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
         forEachConsumer(worldBlob, consumerPos -> {
             BlockEntity te = level.getBlockEntity(consumerPos);
             if (!(te instanceof ConnectorTileEntity)) {
-                XNet.setup.getLogger().warn("What? The connector at " + BlockPosTools.toString(consumerPos) + " is not a connector?");
+                XNet.setup.getLogger().warn("啥? 在 " + BlockPosTools.toString(consumerPos) + " 的“连接器”不是一个连接器?");
             }
             for (Direction facing : OrientationTools.DIRECTION_VALUES) {
                 if (ConnectorBlock.isConnectable(level, consumerPos, facing)) {
@@ -471,7 +471,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
                 // Should always be the case. @todo error?
                 name = ((ConnectorTileEntity) te).getConnectorName();
             } else {
-                XNet.setup.getLogger().warn("What? The connector at " + BlockPosTools.toString(consumerPos) + " is not a connector?");
+                XNet.setup.getLogger().warn("啥? 在 " + BlockPosTools.toString(consumerPos) + " 的“连接器”不是一个连接器?");
             }
             for (Direction facing : OrientationTools.DIRECTION_VALUES) {
                 if (ConnectorBlock.isConnectable(level, consumerPos, facing)) {
@@ -610,7 +610,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
         BlockPos consumerPos = pos.pos().relative(pos.side());
         ConsumerId consumerId = worldBlob.getConsumerAt(consumerPos);
         if (consumerId == null) {
-            throw new RuntimeException("What?");
+            throw new RuntimeException("啥?");
         }
         SidedConsumer id = new SidedConsumer(consumerId, pos.side().getOpposite());
         boolean advanced = level.getBlockState(consumerPos).getBlock() == CableModule.ADVANCED_CONNECTOR.get();
@@ -648,7 +648,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
                 // Should always be the case. @todo error?
                 name = ((ConnectorTileEntity) te).getConnectorName();
             } else {
-                XNet.setup.getLogger().warn("What? The connector at " + BlockPosTools.toString(consumerPos) + " is not a connector?");
+                XNet.setup.getLogger().warn("啥? 在 " + BlockPosTools.toString(consumerPos) + " 的“连接器”不是一个连接器?");
             }
             for (Direction facing : OrientationTools.DIRECTION_VALUES) {
                 if (ConnectorBlock.isConnectable(level, consumerPos, facing)) {
@@ -682,7 +682,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
                 return;
             }
         }
-        XNetMessages.INSTANCE.sendTo(new PacketControllerError("Error copying connector!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        XNetMessages.INSTANCE.sendTo(new PacketControllerError("复制连接器设置时出错!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
     private void copyChannel(Player player, int index) {
@@ -726,7 +726,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
 
             XNetMessages.INSTANCE.sendTo(new PacketJsonToClipboard(json), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         } else {
-            XNetMessages.INSTANCE.sendTo(new PacketControllerError("Channel does not support this!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            XNetMessages.INSTANCE.sendTo(new PacketControllerError("频道设置不支持这个!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 
@@ -794,14 +794,14 @@ public final class TileEntityController extends TickingTileEntity implements ICo
             JsonObject root = parser.parse(json).getAsJsonObject();
 
             if (!root.has(JSON_CONNECTOR) || !root.has(JSON_TYPE)) {
-                XNetMessages.INSTANCE.sendTo(new PacketControllerError("Invalid connector json!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                XNetMessages.INSTANCE.sendTo(new PacketControllerError("无效的连接器配置Json文本!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 return;
             }
 
             String typeId = root.get(JSON_TYPE).getAsString();
             IChannelType type = XNet.xNetApi.findType(typeId);
             if (type != channels[channel].getType()) {
-                XNetMessages.INSTANCE.sendTo(new PacketControllerError("Wrong channel type!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                XNetMessages.INSTANCE.sendTo(new PacketControllerError("错误的频道类型!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 return;
             }
             boolean advanced = root.get(JSON_ADVANCED).getAsBoolean();
@@ -819,7 +819,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
                     // If advanced is desired but our actual connector is not advanced then we give a penalty. The penalty is big
                     // if we can't match with the actual side or if we actually need advanced
                     if (advancedNeeded || !facingOverride.equals(facing)) {
-                        XNetMessages.INSTANCE.sendTo(new PacketControllerError("Advanced connector is needed!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                        XNetMessages.INSTANCE.sendTo(new PacketControllerError("需要高级连接器!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                         return;
                     }
                 }
@@ -832,7 +832,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
             ConnectorInfo info = createConnector(channel, sidedPos);
             info.getConnectorSettings().readFromJson(connectorObject);
         } catch (JsonSyntaxException e) {
-            XNetMessages.INSTANCE.sendTo(new PacketControllerError("Error pasting clipboard data!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            XNetMessages.INSTANCE.sendTo(new PacketControllerError("粘贴剪贴板数据时出错!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
 
         markAsDirty();
@@ -854,7 +854,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
             JsonParser parser = new JsonParser();
             JsonObject root = parser.parse(json).getAsJsonObject();
             if (!root.has(JSON_CHANNEL) || !root.has(JSON_TYPE) || !root.has(JSON_NAME)) {
-                XNetMessages.INSTANCE.sendTo(new PacketControllerError("Invalid channel json!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                XNetMessages.INSTANCE.sendTo(new PacketControllerError("无效的频道配置Json文本!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 return;
             }
             String typeId = root.get(JSON_TYPE).getAsString();
@@ -961,10 +961,10 @@ public final class TileEntityController extends TickingTileEntity implements ICo
             }
 
             if (notEnoughConnectors) {
-                XNetMessages.INSTANCE.sendTo(new PacketControllerError("Not everything could be pasted!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                XNetMessages.INSTANCE.sendTo(new PacketControllerError("并没有粘贴所有的配置!!!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
         } catch (JsonSyntaxException e) {
-            XNetMessages.INSTANCE.sendTo(new PacketControllerError("Error pasting clipboard data!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            XNetMessages.INSTANCE.sendTo(new PacketControllerError("粘贴剪贴板数据出错!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
 
         markAsDirty();

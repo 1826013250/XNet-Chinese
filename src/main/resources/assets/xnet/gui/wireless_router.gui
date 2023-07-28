@@ -5,10 +5,10 @@ window {
 
     panel('','vertical') {
         bgthickness(2)
-        togglebutton('public','Make public') {
+        togglebutton('public','使其公开') {
             channel('public')
             desired(160,16)
-            tooltips('If selected this channel','will be publicly available')
+            tooltips('如果选择了这个','那么这个网络将会被公开')
             check(true)
         }
     }
