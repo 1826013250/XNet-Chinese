@@ -68,18 +68,18 @@ public class EnergyConnectorSettings extends AbstractConnectorSettings {
         colorsGui(gui);
         redstoneGui(gui);
         gui.nl()
-                .choices(TAG_MODE, "Insert or extract mode", energyMode, EnergyMode.values())
+                .choices(TAG_MODE, "输入/提取模式", energyMode, EnergyMode.values())
                 .nl()
 
-                .label("Pri").integer(TAG_PRIORITY, "Insertion priority", priority, 30).nl()
+                .label("权").integer(TAG_PRIORITY, "输入的优先级", priority, 30).nl()
 
-                .label("Rate")
+                .label("速率")
                 .integer(TAG_RATE,
-                        (energyMode == EnergyMode.EXT ? "Max energy extraction rate" : "Max energy insertion rate") +
-                        "|(limited to " + (advanced ? Config.maxRfRateAdvanced.get() : Config.maxRfRateNormal.get()) + " per tick)", rate, 40)
+                        (energyMode == EnergyMode.EXT ? "最大能量提取速率" : "最大能量输入速率") +
+                        "|(最大 " + (advanced ? Config.maxRfRateAdvanced.get() : Config.maxRfRateNormal.get()) + ")", rate, 40)
                 .shift(10)
-                .label(energyMode == EnergyMode.EXT ? "Min" : "Max")
-                .integer(TAG_MINMAX, energyMode == EnergyMode.EXT ? "Disable extraction if energy|is too low" : "Disable insertion if energy|is too high", minmax, 50);
+                .label(energyMode == EnergyMode.EXT ? "最小" : "最大")
+                .integer(TAG_MINMAX, energyMode == EnergyMode.EXT ? "当能量小于设定值时|禁用能量提取" : "当能量大于设定值时|禁用能量输入", minmax, 50);
     }
 
     private static final Set<String> INSERT_TAGS = ImmutableSet.of(TAG_MODE, TAG_RS, TAG_COLOR+"0", TAG_COLOR+"1", TAG_COLOR+"2", TAG_COLOR+"3", TAG_RATE, TAG_MINMAX, TAG_PRIORITY);

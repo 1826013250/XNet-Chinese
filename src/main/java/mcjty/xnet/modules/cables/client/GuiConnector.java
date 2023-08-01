@@ -11,9 +11,6 @@ import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.OrientationTools;
 import mcjty.xnet.modules.cables.CableModule;
 import mcjty.xnet.modules.cables.blocks.ConnectorTileEntity;
-
-import mcjty.xnet.modules.cables.client.StringConvert;
-
 import mcjty.xnet.setup.XNetMessages;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.core.Direction;

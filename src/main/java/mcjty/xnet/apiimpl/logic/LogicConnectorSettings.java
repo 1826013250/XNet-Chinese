@@ -128,16 +128,16 @@ public class LogicConnectorSettings extends AbstractConnectorSettings {
         colorsGui(gui);
         redstoneGui(gui);
         gui.nl()
-                .choices(TAG_MODE, "Sensor or Output mode", logicMode, LogicMode.values())
-                .choices(TAG_SPEED, (logicMode == LogicMode.SENSOR ? "Number of ticks for each check" : "Number of ticks for each operation"), Integer.toString(speed * 5), speeds)
+                .choices(TAG_MODE, "侦测或输出模式", logicMode, LogicMode.values())
+                .choices(TAG_SPEED, (logicMode == LogicMode.SENSOR ? "每次检查所需的游戏刻" : "每次操作所需的游戏刻"), Integer.toString(speed * 5), speeds)
                 .nl();
         if (logicMode == LogicMode.SENSOR) {
             for (Sensor sensor : sensors) {
                 sensor.createGui(gui);
             }
         } else {
-            gui.label("Redstone:")
-                    .integer(TAG_REDSTONE_OUT, "Redstone output value", redstoneOut, 40, 16)
+            gui.label("红石:")
+                    .integer(TAG_REDSTONE_OUT, "红石信号输出强度", redstoneOut, 40, 16)
                     .nl();
         }
     }

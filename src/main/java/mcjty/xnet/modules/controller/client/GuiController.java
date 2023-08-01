@@ -343,7 +343,10 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
                     ChoiceLabel type = new ChoiceLabel()
                             .hint(5, 3, 95, 14);
                     for (IChannelType channelType : XNet.xNetApi.getChannels().values()) {
-                        type.choices(channelType.getName());       // Show names?
+                        type.choices(channelType.getID());       // Show names?
+                    }
+                    for (IChannelType channelType : XNet.xNetApi.getChannels().values()) {
+                        type.choiceTooltip(channelType.getID(), channelType.getName()); // Show Names in Tooltip
                     }
                     Button create = button(100, 3, 53, 14, "创建")
                             .event(() -> createChannel(type.getCurrentChoice()));

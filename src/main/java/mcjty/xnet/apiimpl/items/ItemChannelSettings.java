@@ -534,7 +534,7 @@ public class ItemChannelSettings extends DefaultChannelSettings implements IChan
 
     @Override
     public void createGui(IEditorGui gui) {
-        gui.nl().choices(TAG_MODE, "Item distribution mode", channelMode, ChannelMode.values());
+        gui.nl().choices(TAG_MODE, "物品分发模式", channelMode, ChannelMode.values());
     }
 
     @Override

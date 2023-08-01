@@ -42,9 +42,8 @@ public class ConnectorUpgradeItem extends Item {
     @Override
     public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level worldIn, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(ComponentFactory.literal(ChatFormatting.BLUE + "Sneak right click this on a"));
-        tooltip.add(ComponentFactory.literal(ChatFormatting.BLUE + "normal connector to upgrade it"));
-        tooltip.add(ComponentFactory.literal(ChatFormatting.BLUE + "to an advanced connector"));
+        tooltip.add(ComponentFactory.literal(ChatFormatting.BLUE + "对着正常的连接器潜行并右键"));
+        tooltip.add(ComponentFactory.literal(ChatFormatting.BLUE + "将其升级为高级连接器"));
     }
 
     @Override
@@ -81,18 +80,18 @@ public class ConnectorUpgradeItem extends Item {
                     world.setBlock(pos, blockState, Block.UPDATE_ALL);
                     player.getInventory().removeItem(player.getInventory().selected, 1);
                     player.containerMenu.broadcastChanges();
-                    player.displayClientMessage(ComponentFactory.literal(ChatFormatting.GREEN + "Connector was upgraded"), false);
+                    player.displayClientMessage(ComponentFactory.literal(ChatFormatting.GREEN + "连接器已升级"), false);
                 }
             }
             return InteractionResult.SUCCESS;
         } else if (block == CableModule.ADVANCED_CONNECTOR.get()) {
             if (!world.isClientSide) {
-                player.displayClientMessage(ComponentFactory.literal(ChatFormatting.YELLOW + "This connector is already advanced!"), false);
+                player.displayClientMessage(ComponentFactory.literal(ChatFormatting.YELLOW + "这个连接器已经是高级的了!"), false);
             }
             return InteractionResult.SUCCESS;
         } else {
             if (!world.isClientSide) {
-                player.displayClientMessage(ComponentFactory.literal(ChatFormatting.RED + "Use this item on a connector to upgrade it!"), false);
+                player.displayClientMessage(ComponentFactory.literal(ChatFormatting.RED + "对着连接器使用来升级!"), false);
             }
             return InteractionResult.SUCCESS;
         }

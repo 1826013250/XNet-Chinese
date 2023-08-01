@@ -132,7 +132,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
     private final GenericEnergyStorage energyStorage = new GenericEnergyStorage(this, true, Config.controllerMaxRF.get(), Config.controllerRfPerTick.get());
 
     @Cap(type = CapType.CONTAINER)
-    private final LazyOptional<MenuProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("控制器")
+    private final LazyOptional<MenuProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Controller")
             .containerSupplier(container(ControllerModule.CONTAINER_CONTROLLER, CONTAINER_FACTORY,this))
             .itemHandler(() -> items)
             .energyHandler(() -> energyStorage)
@@ -854,7 +854,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
             JsonParser parser = new JsonParser();
             JsonObject root = parser.parse(json).getAsJsonObject();
             if (!root.has(JSON_CHANNEL) || !root.has(JSON_TYPE) || !root.has(JSON_NAME)) {
-                XNetMessages.INSTANCE.sendTo(new PacketControllerError("无效的频道配置Json文本!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                XNetMessages.INSTANCE.sendTo(new PacketControllerError("无效的频道配置Json文本!!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 return;
             }
             String typeId = root.get(JSON_TYPE).getAsString();
@@ -961,10 +961,10 @@ public final class TileEntityController extends TickingTileEntity implements ICo
             }
 
             if (notEnoughConnectors) {
-                XNetMessages.INSTANCE.sendTo(new PacketControllerError("并没有粘贴所有的配置!!!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                XNetMessages.INSTANCE.sendTo(new PacketControllerError("并没有粘贴所有的连接器配置!!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
         } catch (JsonSyntaxException e) {
-            XNetMessages.INSTANCE.sendTo(new PacketControllerError("粘贴剪贴板数据出错!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            XNetMessages.INSTANCE.sendTo(new PacketControllerError("粘贴剪贴板数据出错!!"), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
 
         markAsDirty();

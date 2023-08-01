@@ -134,10 +134,10 @@ public class XNetTOPDriver implements TOPDriver {
                 NetworkId networkId = te.getNetworkId();
                 if (networkId != null) {
                     if (mode == ProbeMode.DEBUG) {
-                        probeInfo.text(CompoundText.createLabelInfo("Network: ",networkId.id() + ", V: " +
+                        probeInfo.text(CompoundText.createLabelInfo("网络: ",networkId.id() + ", V: " +
                                 worldBlob.getNetworkVersion(networkId)));
                     } else {
-                        probeInfo.text(CompoundText.createLabelInfo("Network: ", networkId.id()));
+                        probeInfo.text(CompoundText.createLabelInfo("网络: ", networkId.id()));
                     }
                 }
 
@@ -155,7 +155,7 @@ public class XNetTOPDriver implements TOPDriver {
                     }
                 }
                 if (blockState.getValue(TileEntityController.ERROR)) {
-                    probeInfo.text(CompoundText.create().style(ERROR).text("Too many controllers on network!"));
+                    probeInfo.text(CompoundText.create().style(ERROR).text("网络上有太多控制器!"));
                 }
 
                 if (mode == ProbeMode.DEBUG) {
@@ -165,12 +165,12 @@ public class XNetTOPDriver implements TOPDriver {
                     }
                     ColorId colorId = worldBlob.getColorAt(data.getPos());
                     if (colorId != null) {
-                        probeInfo.text(CompoundText.createLabelInfo("Color: ", colorId.id()));
+                        probeInfo.text(CompoundText.createLabelInfo("颜色: ", colorId.id()));
                     }
 
                     probeInfo.text(CompoundText.createLabelInfo("Color mask: ", te.getColors()));
                 }
-            }, "Bad tile entity!");
+            }, "非法实体面部!");
         }
     }
 
@@ -183,15 +183,15 @@ public class XNetTOPDriver implements TOPDriver {
                 WorldBlob worldBlob = blobData.getWorldBlob(world);
                 Set<NetworkId> networks = worldBlob.getNetworksAt(data.getPos());
                 for (NetworkId networkId : networks) {
-                    probeInfo.text(CompoundText.createLabelInfo("Network: ", networkId.id()));
+                    probeInfo.text(CompoundText.createLabelInfo("网络: ", networkId.id()));
                     if (mode != ProbeMode.EXTENDED) {
                         break;
                     }
                 }
                 if (blockState.getValue(TileEntityController.ERROR)) {
-                    probeInfo.text(CompoundText.create().style(ERROR).text("Too many channels on router!"));
+                    probeInfo.text(CompoundText.create().style(ERROR).text("路由器上有太多频道!"));
                 } else {
-                    probeInfo.text(CompoundText.createLabelInfo("Channels: ", te.getChannelCount()));
+                    probeInfo.text(CompoundText.createLabelInfo("频道: ", te.getChannelCount()));
                 }
 
                 if (mode == ProbeMode.DEBUG) {
@@ -204,7 +204,7 @@ public class XNetTOPDriver implements TOPDriver {
                         probeInfo.text(CompoundText.createLabelInfo("Color: ", colorId.id()));
                     }
                 }
-            }, "Bad tile entity!");
+            }, "非法实体面部!");
         }
     }
 
@@ -217,13 +217,13 @@ public class XNetTOPDriver implements TOPDriver {
                 WorldBlob worldBlob = blobData.getWorldBlob(world);
                 Set<NetworkId> networks = worldBlob.getNetworksAt(data.getPos());
                 for (NetworkId networkId : networks) {
-                    probeInfo.text(CompoundText.createLabelInfo("Network: ", networkId.id()));
+                    probeInfo.text(CompoundText.createLabelInfo("网络: ", networkId.id()));
                     if (mode != ProbeMode.EXTENDED) {
                         break;
                     }
                 }
                 if (blockState.getValue(TileEntityController.ERROR)) {
-                    probeInfo.text(CompoundText.create().style(ERROR).text("Missing antenna!"));
+                    probeInfo.text(CompoundText.create().style(ERROR).text("没有天线!"));
                 } else {
 //            probeInfo.text(new StringTextComponent(TextStyleClass.LABEL + "Channels: " + TextStyleClass.INFO + getChannelCount()));
                 }
@@ -238,7 +238,7 @@ public class XNetTOPDriver implements TOPDriver {
                         probeInfo.text(CompoundText.createLabelInfo("Color: ", colorId.id()));
                     }
                 }
-            }, "Bad tile entity!");
+            }, "非法实体面部!");
         }
     }
 }

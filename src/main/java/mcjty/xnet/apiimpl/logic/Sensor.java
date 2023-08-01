@@ -157,10 +157,10 @@ public class Sensor {
 
     public void createGui(IEditorGui gui) {
         gui
-                .choices(TAG_MODE + index, "Sensor mode", sensorMode, SensorMode.values())
-                .choices(TAG_OPERATOR + index, "Operator", operator, Operator.values())
-                .integer(TAG_AMOUNT + index, "Amount to compare with", amount, 46)
-                .colors(TAG_COLOR + index, "Output color", outputColor.getColor(), COLORS)
+                .choices(TAG_MODE + index, "侦测模式", sensorMode, SensorMode.values())
+                .choices(TAG_OPERATOR + index, "判断标准", operator, Operator.values())
+                .integer(TAG_AMOUNT + index, "要比较的数量", amount, 46)
+                .colors(TAG_COLOR + index, "指代结果的颜色", outputColor.getColor(), COLORS)
                 .ghostSlot(TAG_STACK + index, filter)
                 .nl();
     }

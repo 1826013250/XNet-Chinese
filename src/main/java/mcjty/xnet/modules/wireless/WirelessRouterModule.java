@@ -85,8 +85,8 @@ public class WirelessRouterModule implements IModule {
         return new BaseBlock(new BlockBuilder()
                 .info(TooltipBuilder.key("message.xnet.shiftmessage"))
                 .infoShift(TooltipBuilder.header(),
-                        TooltipBuilder.parameter("one", stack -> "range " + Integer.toString(Config.antennaTier1Range.get()) + " (" + Integer.toString(Config.wirelessRouterRfPerChannel[TileEntityWirelessRouter.TIER_1].get()) + " rf/t/channel)"),
-                        TooltipBuilder.parameter("two", stack -> "range " + Integer.toString(Config.antennaTier2Range.get()) + " (" + Integer.toString(Config.wirelessRouterRfPerChannel[TileEntityWirelessRouter.TIER_2].get()) + " rf/t/channel)")
+                        TooltipBuilder.parameter("one", stack -> "范围 " + Integer.toString(Config.antennaTier1Range.get()) + " (" + Integer.toString(Config.wirelessRouterRfPerChannel[TileEntityWirelessRouter.TIER_1].get()) + " RF/游戏刻/频道)"),
+                        TooltipBuilder.parameter("two", stack -> "范围 " + Integer.toString(Config.antennaTier2Range.get()) + " (" + Integer.toString(Config.wirelessRouterRfPerChannel[TileEntityWirelessRouter.TIER_2].get()) + " RF/游戏刻/频道)")
                 )
         ) {
             @Override

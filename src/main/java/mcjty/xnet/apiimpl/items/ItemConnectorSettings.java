@@ -114,39 +114,39 @@ public class ItemConnectorSettings extends AbstractConnectorSettings {
         colorsGui(gui);
         redstoneGui(gui);
         gui.nl()
-                .choices(TAG_MODE, "Insert or extract mode", itemMode, ItemMode.values())
+                .choices(TAG_MODE, "输入/提取模式", itemMode, ItemMode.values())
                 .shift(5)
-                .choices(TAG_STACK, "Single item, stack, or count", stackMode, StackMode.values());
+                .choices(TAG_STACK, "单个物品,一组,或指定数量", stackMode, StackMode.values());
 
         if (stackMode == StackMode.COUNT && itemMode == ItemMode.EXT) {
             gui
-                    .integer(TAG_EXTRACT_AMOUNT, "Amount of items to extract|per operation", extractAmount, 30, 64);
+                    .integer(TAG_EXTRACT_AMOUNT, "每次操作提取物品的数量", extractAmount, 30, 64);
         }
 
         gui
                 .shift(10)
-                .choices(TAG_SPEED, "Number of ticks for each operation", Integer.toString(speed * 5), speeds)
+                .choices(TAG_SPEED, "每次操作所需所需的游戏刻", Integer.toString(speed * 5), speeds)
                 .nl();
 
         gui
-                .label("Pri").integer(TAG_PRIORITY, "Insertion priority", priority, 36).shift(5)
+                .label("权").integer(TAG_PRIORITY, "输入优先级", priority, 36).shift(5)
                 .label("#")
-                .integer(TAG_COUNT, itemMode == ItemMode.EXT ? "Amount in destination inventory|to keep" : "Max amount in destination|inventory", count, 30);
+                .integer(TAG_COUNT, itemMode == ItemMode.EXT ? "在目标容器/物品栏中保持的物品数量" : "在目标容器/物品栏中物品的最大数量", count, 30);
 
         if (itemMode == ItemMode.EXT) {
             gui
                     .shift(5)
-                    .choices(TAG_EXTRACT, "Extract mode (first available,|random slot or round robin)", extractMode, ExtractMode.values());
+                    .choices(TAG_EXTRACT, "提取模式 (最近可用,随机或者循环)", extractMode, ExtractMode.values());
         }
 
         gui
                 .nl()
 
-                .toggleText(TAG_BLACKLIST, "Enable blacklist mode", "BL", blacklist).shift(0)
-                .toggleText(TAG_TAGS, "Tag matching", "Tags", tagsMode).shift(0)
-                .toggleText(TAG_META, "Metadata matching", "Meta", metaMode).shift(0)
-                .toggleText(TAG_NBT, "NBT matching", "NBT", nbtMode).shift(0)
-                .choices(TAG_FILTER_IDX, "Filter Index", getFilterIndexString(), "<Off>", "1", "2", "3", "4")
+                .toggleText(TAG_BLACKLIST, "启用黑名单模式", "黑", blacklist).shift(0)
+                .toggleText(TAG_TAGS, "启用标签匹配", "标签", tagsMode).shift(0)
+                .toggleText(TAG_META, "启用元数据匹配", "元", metaMode).shift(0)
+                .toggleText(TAG_NBT, "启用NBT标签匹配", "NBT", nbtMode).shift(0)
+                .choices(TAG_FILTER_IDX, "过滤器索引", getFilterIndexString(), "<关>", "1", "2", "3", "4")
                 .nl();
         for (int i = 0 ; i < FILTER_SIZE ; i++) {
             gui.ghostSlot(TAG_FILTER + i, filters.get(i));
@@ -155,7 +155,7 @@ public class ItemConnectorSettings extends AbstractConnectorSettings {
 
     private String getFilterIndexString() {
         if (filterIndex == -1) {
-            return "<Off>";
+            return "<关>";
         } else {
             return Integer.toString(filterIndex);
         }
@@ -261,7 +261,7 @@ public class ItemConnectorSettings extends AbstractConnectorSettings {
             speed = 4;
         }
         String idx = (String) data.get(TAG_FILTER_IDX);
-        this.filterIndex = "<Off>".equalsIgnoreCase(idx) ? -1 : Integer.parseInt(idx);
+        this.filterIndex = "<关>".equalsIgnoreCase(idx) ? -1 : Integer.parseInt(idx);
         tagsMode = Boolean.TRUE.equals(data.get(TAG_TAGS));
         metaMode = Boolean.TRUE.equals(data.get(TAG_META));
         nbtMode = Boolean.TRUE.equals(data.get(TAG_NBT));
