@@ -540,6 +540,7 @@ public final class TileEntityController extends TickingTileEntity implements ICo
         }
         channels[channel].getChannelSettings().update(data);
 
+
         Boolean enabled = (Boolean) data.get(GuiController.TAG_ENABLED);
         channels[channel].setEnabled(Boolean.TRUE.equals(enabled));
 

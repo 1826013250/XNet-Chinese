@@ -9,6 +9,7 @@ import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.api.xnet.channels.RSMode;
 import mcjty.rftoolsbase.api.xnet.gui.IEditorGui;
 import mcjty.xnet.XNet;
+import mcjty.xnet.apiimpl.DistributionToChinese;
 import mcjty.xnet.setup.XNetMessages;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -242,8 +243,8 @@ public abstract class AbstractEditorPanel implements IEditorGui {
         ChoiceLabel choice = new ChoiceLabel().choices(values).choice(current)
                 .tooltips(parseTooltips(tooltip))
                 .hint(x, y, w, 14);
-        data.put(tag, current);
-        choice.event((newChoice) -> update(tag, newChoice));
+        data.put(tag, DistributionToChinese.backToEnglish(current));
+        choice.event((newChoice) -> update(tag, DistributionToChinese.backToEnglish(newChoice)));
         panel.children(choice);
         components.put(tag, choice);
         x += w;
@@ -255,9 +256,9 @@ public abstract class AbstractEditorPanel implements IEditorGui {
         String[] strings = new String[values.length];
         int i = 0;
         for (T s : values) {
-            strings[i++] = StringUtils.capitalize(s.toString().toLowerCase());
+            strings[i++] = DistributionToChinese.convertToChinese(StringUtils.capitalize(s.toString().toLowerCase()));
         }
-        return choices(tag, tooltip, StringUtils.capitalize(current.toString().toLowerCase()), strings);
+        return choices(tag, tooltip, DistributionToChinese.convertToChinese(StringUtils.capitalize(current.toString().toLowerCase())), strings);
     }
 
     @Override

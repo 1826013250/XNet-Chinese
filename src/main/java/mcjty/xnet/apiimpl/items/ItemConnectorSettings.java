@@ -136,7 +136,7 @@ public class ItemConnectorSettings extends AbstractConnectorSettings {
         if (itemMode == ItemMode.EXT) {
             gui
                     .shift(5)
-                    .choices(TAG_EXTRACT, "提取模式 (最近可用,随机或者循环)", extractMode, ExtractMode.values());
+                    .choices(TAG_EXTRACT, "提取目标容器内物品的模式", extractMode, ExtractMode.values());
         }
 
         gui

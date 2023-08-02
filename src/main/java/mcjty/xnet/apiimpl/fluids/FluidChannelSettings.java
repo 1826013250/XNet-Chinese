@@ -14,6 +14,7 @@ import mcjty.xnet.XNet;
 import mcjty.xnet.apiimpl.EnumStringTranslators;
 import mcjty.xnet.setup.Config;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -27,10 +28,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FluidChannelSettings extends DefaultChannelSettings implements IChannelSettings {
 
@@ -349,7 +347,7 @@ public class FluidChannelSettings extends DefaultChannelSettings implements ICha
 
     @Override
     public void update(Map<String, Object> data) {
-        channelMode = ChannelMode.valueOf(((String)data.get(TAG_MODE)).toUpperCase());
+        channelMode = ChannelMode.valueOf(((String)data.get(TAG_MODE)).toUpperCase(Locale.ROOT));
     }
 
     @Override

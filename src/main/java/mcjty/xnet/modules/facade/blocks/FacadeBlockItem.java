@@ -9,6 +9,7 @@ import mcjty.xnet.modules.cables.CableModule;
 import mcjty.xnet.modules.cables.blocks.ConnectorTileEntity;
 import mcjty.xnet.modules.facade.FacadeModule;
 import mcjty.xnet.modules.facade.IFacadeSupport;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -75,7 +76,7 @@ public class FacadeBlockItem extends BlockItem implements ITooltipSettings {
         Player player = context.getPlayer();
         setMimicBlock(item, mimicBlock);
         if (world.isClientSide) {
-            player.displayClientMessage(ComponentFactory.literal("伪装器现在伪装成了" + mimicBlock.getBlock().getName()), false);
+            player.displayClientMessage(ComponentFactory.literal("伪装器现在伪装成了 \"" + I18n.get(mimicBlock.getBlock().getDescriptionId()) + "\""), false);
         }
     }
 

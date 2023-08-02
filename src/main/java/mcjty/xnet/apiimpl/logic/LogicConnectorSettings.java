@@ -128,7 +128,7 @@ public class LogicConnectorSettings extends AbstractConnectorSettings {
         colorsGui(gui);
         redstoneGui(gui);
         gui.nl()
-                .choices(TAG_MODE, "侦测或输出模式", logicMode, LogicMode.values())
+                .choices(TAG_MODE, "连接器模式", logicMode, LogicMode.values())
                 .choices(TAG_SPEED, (logicMode == LogicMode.SENSOR ? "每次检查所需的游戏刻" : "每次操作所需的游戏刻"), Integer.toString(speed * 5), speeds)
                 .nl();
         if (logicMode == LogicMode.SENSOR) {

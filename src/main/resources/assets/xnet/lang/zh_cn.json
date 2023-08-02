@@ -36,7 +36,7 @@
   "itemGroup.xnet": "XNet",
   "message.xnet.shiftmessage": "<按住Shift>",
   "message.xnet.facade.header": "这个方块可以伪装成其他方块，用于隐藏Xnet线缆",
-  "message.xnet.facade.gold": "手持方块右键或潜行时右键想目标方块来伪装，手持方块右键或潜行时右键线缆/连接器来隐藏。",
+  "message.xnet.facade.gold": "手持方块右键/潜行时右键目标方块来伪装，手持方块右键/潜行时右键线缆/连接器来隐藏。",
   "message.xnet.facade.info": "当前伪装：",
   "message.xnet.connector.header": "将连接器放置在方块或机器旁使其连接到网络",
   "message.xnet.connector.info": "RF容量：",
