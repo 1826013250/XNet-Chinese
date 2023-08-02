@@ -8,7 +8,7 @@ window {
         togglebutton('public','使其公开') {
             channel('public')
             desired(160,16)
-            tooltips('如果选择了这个','那么这个网络将会被公开')
+            tooltips('如果选择了这个','那么这个网络将会被公开给其他玩家使用','否则该无限网络将只能被§a放置该无线路由器的玩家','所放置的其他无线路由器侦测到')
             check(true)
         }
     }

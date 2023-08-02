@@ -122,7 +122,7 @@ public class GuiRouter extends GenericGuiContainer<TileEntityRouter, GenericCont
             labelColor = 0xffaa1133;
         }
         panel1.children(
-                label("Ch").color(labelColor),
+                label("频道").color(labelColor),
                 label(name),
                 label(">").color(labelColor));
         if (channel.isRemote()) {
@@ -138,12 +138,12 @@ public class GuiRouter extends GenericGuiContainer<TileEntityRouter, GenericCont
 
         Panel panel2 = horizontal(0, 0).hint(0, 13, 160, 13)
                 .children(
-                        label("Pos").color(labelColor),
+                        label("坐标").color(labelColor),
                         label(BlockPosTools.toString(controllerPos)));
 
         Panel panel3 = horizontal(0, 0).hint(0, 26, 160, 13)
                 .children(
-                        label("Index").color(labelColor),
+                        label("频道索引").color(labelColor),
                         label(index + " (" + type.getName() + ")"));
 
         panel.children(panel1, panel2, panel3);
