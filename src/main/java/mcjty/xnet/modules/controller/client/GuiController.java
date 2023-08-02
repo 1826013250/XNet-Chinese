@@ -28,6 +28,7 @@ import mcjty.xnet.XNet;
 import mcjty.xnet.client.ChannelClientInfo;
 import mcjty.xnet.client.ConnectedBlockClientInfo;
 import mcjty.xnet.client.ConnectorClientInfo;
+import mcjty.xnet.modules.cables.client.StringConvert;
 import mcjty.xnet.modules.controller.ControllerModule;
 import mcjty.xnet.modules.controller.blocks.TileEntityController;
 import mcjty.xnet.setup.Config;
@@ -631,7 +632,7 @@ public class GuiController extends GenericGuiContainer<TileEntityController, Gen
                         ChatFormatting.WHITE + "(双击来高亮显示该方块)");
             }
 
-            panel.children(label(sidedPos.side().getSerializedName().substring(0, 1).toUpperCase()).color(color).desiredWidth(18));
+            panel.children(label(StringConvert.convertToChinese(sidedPos.side())).color(color).desiredWidth(18));
             for (int i = 0 ; i < MAX_CHANNELS ; i++) {
                 Button but = new Button().desiredWidth(14);
                 ChannelClientInfo info = tileEntity.clientChannels.get(i);
